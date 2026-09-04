@@ -22,6 +22,7 @@ param(
     [string]$Name,
 
     [switch]$All,
+    [switch]$Installed,
     [string]$Tier,
     [string]$Category,
     [string]$AppsDir,
@@ -142,10 +143,12 @@ function Parse-AppsToml {
 
 function Get-FilteredApps {
     $apps = Parse-AppsToml
+    $installed = Get-Installed
     return $apps | Where-Object {
         $match = $true
         if ($Tier -and $_.tier -ne $Tier) { $match = $false }
         if ($Category -and $_.category -ne $Category) { $match = $false }
+        if ($Installed -and $installed.apps.PSObject.Properties.Name -notcontains $_.name) { $match = $false }
         $match
     }
 }
@@ -371,6 +374,7 @@ function Show-Help {
     Write-Host "    tap                          Show this help" -ForegroundColor Gray
     Write-Host "    tap list [--tier <tier>]     List apps (native/msys2/cross-platform/python/web)" -ForegroundColor Gray
     Write-Host "    tap list --category <cat>    List by category (arcade/puzzle/roguelike/strategy/board/card/music/creative)" -ForegroundColor Gray
+    Write-Host "    tap list --installed         List only installed apps" -ForegroundColor Gray
     Write-Host "    tap install <name>           Install an app" -ForegroundColor Gray
     Write-Host "    tap install --all [--tier native]  Install multiple apps" -ForegroundColor Gray
     Write-Host "    tap remove <name>            Uninstall an app" -ForegroundColor Gray
