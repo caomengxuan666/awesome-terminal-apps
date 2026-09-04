@@ -1,22 +1,22 @@
 <#
 .SYNOPSIS
-    Awesome Terminal Apps - PowerShell Installer
+    tap - Awesome Terminal Apps Installer
 .DESCRIPTION
     Install, manage, and update terminal apps on Windows.
 .EXAMPLE
-    .\install.ps1 list
-    .\install.ps1 list --tier native
-    .\install.ps1 install bastet
-    .\install.ps1 install --all --tier native
-    .\install.ps1 remove bastet
-    .\install.ps1 update
-    .\install.ps1 config -AppsDir D:\my\apps
+    tap
+    tap list
+    tap list --tier native
+    tap install sigye
+    tap remove sigye
+    tap info cava
+    tap config -AppsDir D:\my\apps
 #>
 
 param(
     [Parameter(Position=0)]
-    [ValidateSet("list", "install", "remove", "update", "info", "config")]
-    [string]$Command = "list",
+    [ValidateSet("list", "install", "remove", "update", "info", "config", "help")]
+    [string]$Command = "help",
 
     [Parameter(Position=1)]
     [string]$Name,
@@ -363,6 +363,29 @@ function Remove-App($name) {
 
 # --- Commands ---
 
+function Show-Help {
+    Write-Host ""
+    Write-Host "  tap - Awesome Terminal Apps Installer" -ForegroundColor White
+    Write-Host ""
+    Write-Host "  Usage:" -ForegroundColor Cyan
+    Write-Host "    tap                          Show this help" -ForegroundColor Gray
+    Write-Host "    tap list [--tier <tier>]     List apps (native/msys2/cross-platform/python/web)" -ForegroundColor Gray
+    Write-Host "    tap list --category <cat>    List by category (arcade/puzzle/roguelike/strategy/board/card/music/creative)" -ForegroundColor Gray
+    Write-Host "    tap install <name>           Install an app" -ForegroundColor Gray
+    Write-Host "    tap install --all [--tier native]  Install multiple apps" -ForegroundColor Gray
+    Write-Host "    tap remove <name>            Uninstall an app" -ForegroundColor Gray
+    Write-Host "    tap info <name>              Show app details" -ForegroundColor Gray
+    Write-Host "    tap update                   Update installed apps" -ForegroundColor Gray
+    Write-Host "    tap config                   Show current config" -ForegroundColor Gray
+    Write-Host "    tap config -AppsDir <path>   Set install directory" -ForegroundColor Gray
+    Write-Host ""
+    Write-Host "  Examples:" -ForegroundColor Cyan
+    Write-Host "    tap list --tier native --category music" -ForegroundColor Gray
+    Write-Host "    tap install sigye" -ForegroundColor Gray
+    Write-Host "    tap config -AppsDir D:\my\apps" -ForegroundColor Gray
+    Write-Host ""
+}
+
 function Show-Config {
     Write-Host ""
     Write-Host "  Configuration" -ForegroundColor White
@@ -480,8 +503,8 @@ function Invoke-Install {
         Install-App $app | Out-Null
     }
     else {
-        Write-Host "Usage: .\install.ps1 install <app-name>" -ForegroundColor Yellow
-        Write-Host "       .\install.ps1 install --all [--tier native]" -ForegroundColor Yellow
+        Write-Host "Usage: tap install <app-name>" -ForegroundColor Yellow
+        Write-Host "       tap install --all [--tier native]" -ForegroundColor Yellow
     }
 }
 
@@ -527,8 +550,10 @@ function Invoke-Update {
 switch ($Command) {
     "list"    { Show-List }
     "install" { Invoke-Install }
-    "remove"  { if ($Name) { Remove-App $Name } else { Write-Host "Usage: .\install.ps1 remove <app-name>" -ForegroundColor Yellow } }
+    "remove"  { if ($Name) { Remove-App $Name } else { Write-Host "Usage: tap remove <app-name>" -ForegroundColor Yellow } }
     "update"  { Invoke-Update }
-    "info"    { if ($Name) { Show-Info $Name } else { Write-Host "Usage: .\install.ps1 info <app-name>" -ForegroundColor Yellow } }
+    "info"    { if ($Name) { Show-Info $Name } else { Write-Host "Usage: tap info <app-name>" -ForegroundColor Yellow } }
     "config"  { Set-Config }
+    "help"    { Show-Help }
+    default   { Show-Help }
 }
