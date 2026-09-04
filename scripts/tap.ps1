@@ -333,10 +333,25 @@ function Install-App($app) {
                 }
             }
             else {
-                # Direct .exe download
-                $exePath = Join-Path $appDir $download.Name
+                # Direct .exe download - try silent install, fallback to portable
+                $downloadPath = Join-Path $appDir $download.Name
                 Write-Host "  Downloading $($download.Name)..." -ForegroundColor Gray
-                Invoke-WebRequest -Uri $download.Url -OutFile $exePath -UseBasicParsing
+                Invoke-WebRequest -Uri $download.Url -OutFile $downloadPath -UseBasicParsing
+
+                # Try silent install (Inno Setup / NSIS flags)
+                Write-Host "  Installing..." -ForegroundColor Gray
+                $proc = Start-Process -FilePath $downloadPath -ArgumentList "/VERYSILENT", "/DIR=$appDir", "/NORESTART" -Wait -PassThru -NoNewWindow -ErrorAction SilentlyContinue
+
+                # Find the exe after install
+                $exe = Get-ChildItem -Path $appDir -Filter "*.exe" -Recurse | Where-Object { $_.Name -ne (Split-Path $download.Name -Leaf) } | Select-Object -First 1
+                if ($exe) {
+                    $exePath = $exe.FullName
+                    Remove-Item $downloadPath -Force -ErrorAction SilentlyContinue
+                }
+                else {
+                    # Assume it's a portable exe
+                    $exePath = $downloadPath
+                }
             }
 
             $installed = Get-Installed
