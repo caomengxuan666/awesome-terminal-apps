@@ -142,15 +142,17 @@ function Parse-AppsToml {
 }
 
 function Get-FilteredApps {
+    param([bool]$ShowInstalled = $false)
     $apps = Parse-AppsToml
-    $installed = Get-Installed
-    return $apps | Where-Object {
+    $installedData = Get-Installed
+    $result = @($apps | Where-Object {
         $match = $true
         if ($Tier -and $_.tier -ne $Tier) { $match = $false }
         if ($Category -and $_.category -ne $Category) { $match = $false }
-        if ($Installed -and $installed.apps.PSObject.Properties.Name -notcontains $_.name) { $match = $false }
+        if ($ShowInstalled -and $installedData.apps.PSObject.Properties.Name -notcontains $_.name) { $match = $false }
         $match
-    }
+    })
+    return ,$result
 }
 
 function Get-GithubDownloadUrl($github, $name) {
@@ -418,7 +420,7 @@ function Set-Config {
 }
 
 function Show-List {
-    $apps = Get-FilteredApps
+    $apps = Get-FilteredApps -ShowInstalled $Installed
     $installed = Get-Installed
 
     $tierColors = @{
