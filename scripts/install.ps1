@@ -1,0 +1,534 @@
+<#
+.SYNOPSIS
+    Awesome Terminal Apps - PowerShell Installer
+.DESCRIPTION
+    Install, manage, and update terminal apps on Windows.
+.EXAMPLE
+    .\install.ps1 list
+    .\install.ps1 list --tier native
+    .\install.ps1 install bastet
+    .\install.ps1 install --all --tier native
+    .\install.ps1 remove bastet
+    .\install.ps1 update
+    .\install.ps1 config -AppsDir D:\my\apps
+#>
+
+param(
+    [Parameter(Position=0)]
+    [ValidateSet("list", "install", "remove", "update", "info", "config")]
+    [string]$Command = "list",
+
+    [Parameter(Position=1)]
+    [string]$Name,
+
+    [switch]$All,
+    [string]$Tier,
+    [string]$Category,
+    [string]$AppsDir,
+    [switch]$Force
+)
+
+$ErrorActionPreference = "Stop"
+
+# --- Config ---
+$SCRIPT_DIR = Split-Path -Parent $MyInvocation.MyCommand.Path
+$REPO_ROOT = Split-Path -Parent $SCRIPT_DIR
+$APPS_TOML = Join-Path $REPO_ROOT "apps.toml"
+$CONFIG_FILE = Join-Path $env:USERPROFILE ".config\awesome-terminal-apps\config.json"
+$INSTALLED_JSON = "installed.json"
+
+function Get-DefaultAppsDir {
+    # Find first non-system drive (not C:)
+    $drives = Get-PSDrive -PSProvider FileSystem |
+        Where-Object { $_.Name -ne "C" -and $_.Free -gt 0 } |
+        Sort-Object Name
+    if ($drives) {
+        return Join-Path "$($drives[0].Name):\" "apps\terminal"
+    }
+    # Fallback: only C: drive exists
+    return Join-Path $env:USERPROFILE "apps\terminal"
+}
+
+function Get-SavedConfig {
+    if (Test-Path $CONFIG_FILE) {
+        return Get-Content $CONFIG_FILE -Raw | ConvertFrom-Json
+    }
+    return $null
+}
+
+function Save-Config($config) {
+    $dir = Split-Path -Parent $CONFIG_FILE
+    if (-not (Test-Path $dir)) {
+        New-Item -ItemType Directory -Path $dir -Force | Out-Null
+    }
+    $config | ConvertTo-Json -Depth 3 | Set-Content $CONFIG_FILE -Encoding UTF8
+}
+
+# Resolve apps directory: CLI param > config file > auto-detect
+if ($AppsDir) {
+    $ResolvedAppsDir = $AppsDir
+}
+else {
+    $savedConfig = Get-SavedConfig
+    if ($savedConfig -and $savedConfig.apps_dir) {
+        $ResolvedAppsDir = $savedConfig.apps_dir
+    }
+    else {
+        $ResolvedAppsDir = Get-DefaultAppsDir
+    }
+}
+
+# --- Functions ---
+
+function Get-AppsDir {
+    if (-not (Test-Path $ResolvedAppsDir)) {
+        New-Item -ItemType Directory -Path $ResolvedAppsDir -Force | Out-Null
+    }
+    return $ResolvedAppsDir
+}
+
+function Get-InstalledPath {
+    return Join-Path (Get-AppsDir) $INSTALLED_JSON
+}
+
+function Get-Installed {
+    $path = Get-InstalledPath
+    if (Test-Path $path) {
+        return Get-Content $path -Raw | ConvertFrom-Json
+    }
+    return @{ apps = @{} }
+}
+
+function Save-Installed($installed) {
+    $path = Get-InstalledPath
+    $installed | ConvertTo-Json -Depth 5 | Set-Content $path -Encoding UTF8
+}
+
+function Parse-AppsToml {
+    if (-not (Test-Path $APPS_TOML)) {
+        Write-Host "Error: apps.toml not found at $APPS_TOML" -ForegroundColor Red
+        exit 1
+    }
+
+    $content = Get-Content $APPS_TOML -Raw
+    $apps = [System.Collections.ArrayList]::new()
+    $current = $null
+
+    foreach ($line in $content -split "`n") {
+        $line = $line.Trim()
+
+        if ($line -match '^\[\[games\]\]$') {
+            if ($current) { $apps.Add($current) | Out-Null }
+            $current = [ordered]@{
+                name = ""; category = ""; tier = ""; github = ""; url = ""
+                license = ""; language = ""; description = ""; tags = @()
+            }
+        }
+        elseif ($current -and $line -match '^(\w+)\s*=\s*"(.*)"$') {
+            $key = $Matches[1]
+            $val = $Matches[2]
+            if ($key -eq "tags") {
+                $current.tags = $val -split '",\s*"' | ForEach-Object { $_.Trim('"', ' ') }
+            }
+            elseif ($current.Contains($key)) {
+                $current[$key] = $val
+            }
+        }
+    }
+    if ($current) { $apps.Add($current) | Out-Null }
+
+    return $apps
+}
+
+function Get-FilteredApps {
+    $apps = Parse-AppsToml
+    return $apps | Where-Object {
+        $match = $true
+        if ($Tier -and $_.tier -ne $Tier) { $match = $false }
+        if ($Category -and $_.category -ne $Category) { $match = $false }
+        $match
+    }
+}
+
+function Get-GithubDownloadUrl($github, $name) {
+    if (-not $github) { return $null }
+
+    # Try gh CLI first (faster, respects auth)
+    $ghAvailable = Get-Command gh -ErrorAction SilentlyContinue
+    if ($ghAvailable) {
+        try {
+            $json = gh api "repos/$github/releases/latest" 2>$null
+            $release = $json | ConvertFrom-Json
+
+            if ($release.assets) {
+                # Prefer .exe for Windows
+                $exe = $release.assets | Where-Object {
+                    $_.name -match '\.exe$' -and $_.name -match 'windows|win32|win64|x86_64-pc-windows|pc-windows'
+                } | Select-Object -First 1
+
+                if (-not $exe) {
+                    $exe = $release.assets | Where-Object { $_.name -match '\.exe$' } | Select-Object -First 1
+                }
+
+                if ($exe) {
+                    return @{
+                        Url = $exe.browser_download_url
+                        Name = $exe.name
+                        Version = $release.tag_name
+                        Type = "exe"
+                    }
+                }
+
+                # Fallback: .zip with Windows in name
+                $zip = $release.assets | Where-Object {
+                    $_.name -match '\.zip$' -and $_.name -match 'windows|win32|win64|x86_64-pc-windows|pc-windows'
+                } | Select-Object -First 1
+
+                if (-not $zip) {
+                    $zip = $release.assets | Where-Object { $_.name -match '\.zip$' } | Select-Object -First 1
+                }
+
+                if ($zip) {
+                    return @{
+                        Url = $zip.browser_download_url
+                        Name = $zip.name
+                        Version = $release.tag_name
+                        Type = "zip"
+                    }
+                }
+            }
+        }
+        catch {
+            Write-Verbose "gh CLI failed for $github : $_"
+        }
+    }
+
+    # Fallback to Invoke-RestMethod
+    $apiUrl = "https://api.github.com/repos/$github/releases/latest"
+    try {
+        $headers = @{}
+        if ($env:GITHUB_TOKEN) { $headers["Authorization"] = "token $env:GITHUB_TOKEN" }
+        $release = Invoke-RestMethod -Uri $apiUrl -Headers $headers -ErrorAction SilentlyContinue
+
+        if ($release.assets) {
+            $exe = $release.assets | Where-Object {
+                $_.name -match '\.exe$' -and $_.name -match 'windows|win32|win64|x86_64-pc-windows|pc-windows'
+            } | Select-Object -First 1
+
+            if (-not $exe) {
+                $exe = $release.assets | Where-Object { $_.name -match '\.exe$' } | Select-Object -First 1
+            }
+
+            if ($exe) {
+                return @{
+                    Url = $exe.browser_download_url
+                    Name = $exe.name
+                    Version = $release.tag_name
+                    Type = "exe"
+                }
+            }
+
+            $zip = $release.assets | Where-Object {
+                $_.name -match '\.zip$' -and $_.name -match 'windows|win32|win64|x86_64-pc-windows|pc-windows'
+            } | Select-Object -First 1
+
+            if (-not $zip) {
+                $zip = $release.assets | Where-Object { $_.name -match '\.zip$' } | Select-Object -First 1
+            }
+
+            if ($zip) {
+                return @{
+                    Url = $zip.browser_download_url
+                    Name = $zip.name
+                    Version = $release.tag_name
+                    Type = "zip"
+                }
+            }
+        }
+    }
+    catch {
+        Write-Verbose "API failed for $github : $_"
+    }
+
+    return $null
+}
+
+function Install-App($app) {
+    $dir = Get-AppsDir
+    $appDir = Join-Path $dir $app.name
+
+    Write-Host "Installing $($app.name)..." -ForegroundColor Cyan
+
+    if ($app.tier -eq "native" -and $app.github) {
+        $download = Get-GithubDownloadUrl $app.github $app.name
+        if ($download) {
+            if (-not (Test-Path $appDir)) {
+                New-Item -ItemType Directory -Path $appDir -Force | Out-Null
+            }
+
+            if ($download.Type -eq "zip") {
+                # Download and extract zip
+                $zipPath = Join-Path $appDir $download.Name
+                Write-Host "  Downloading $($download.Name)..." -ForegroundColor Gray
+                Invoke-WebRequest -Uri $download.Url -OutFile $zipPath -UseBasicParsing
+
+                Write-Host "  Extracting..." -ForegroundColor Gray
+                Expand-Archive -Path $zipPath -DestinationPath $appDir -Force
+                Remove-Item $zipPath -Force
+
+                # Find the .exe in extracted files
+                $exe = Get-ChildItem -Path $appDir -Filter "*.exe" -Recurse | Select-Object -First 1
+                if ($exe) {
+                    $exePath = $exe.FullName
+                }
+                else {
+                    $exePath = $appDir
+                }
+            }
+            else {
+                # Direct .exe download
+                $exePath = Join-Path $appDir $download.Name
+                Write-Host "  Downloading $($download.Name)..." -ForegroundColor Gray
+                Invoke-WebRequest -Uri $download.Url -OutFile $exePath -UseBasicParsing
+            }
+
+            $installed = Get-Installed
+            $installed.apps[$app.name] = @{
+                version = $download.Version
+                path = $exePath
+                installed_at = (Get-Date -Format "o")
+                tier = $app.tier
+                github = $app.github
+            }
+            Save-Installed $installed
+
+            Write-Host "  Installed to $exePath" -ForegroundColor Green
+            return $true
+        }
+    }
+
+    Write-Host "  No prebuilt binary available for $($app.name) ($($app.tier))" -ForegroundColor Yellow
+    Write-Host "  Install manually:" -ForegroundColor Gray
+
+    switch ($app.tier) {
+        "msys2" {
+            Write-Host "    1. Install MSYS2 from https://www.msys2.org/" -ForegroundColor Gray
+            Write-Host "    2. pacman -S mingw-w64-x86_64-$($app.name)" -ForegroundColor Gray
+        }
+        "cross-platform" {
+            if ($app.language -eq "Rust") {
+                Write-Host "    cargo install $($app.name)" -ForegroundColor Gray
+            }
+            elseif ($app.language -eq "Go") {
+                Write-Host "    go install $($app.github)@latest" -ForegroundColor Gray
+            }
+        }
+        "python" {
+            Write-Host "    pip install $($app.name)" -ForegroundColor Gray
+        }
+        "web" {
+            Write-Host "    Open: $($app.url)" -ForegroundColor Gray
+        }
+    }
+
+    return $false
+}
+
+function Remove-App($name) {
+    $installed = Get-Installed
+    if ($installed.apps.PSObject.Properties.Name -contains $name) {
+        $appInfo = $installed.apps.$name
+        if ($appInfo.path -and (Test-Path $appInfo.path)) {
+            $target = $appInfo.path
+            # If path is a directory (zip install), remove entire dir
+            if (Test-Path $target -PathType Container) {
+                Remove-Item $target -Recurse -Force
+            }
+            else {
+                Remove-Item $target -Force
+                $appDir = Split-Path $target
+                if ((Get-ChildItem $appDir -ErrorAction SilentlyContinue).Count -eq 0) {
+                    Remove-Item $appDir -Force
+                }
+            }
+        }
+        $installed.apps.PSObject.Properties.Remove($name)
+        Save-Installed $installed
+        Write-Host "Removed $name" -ForegroundColor Green
+    }
+    else {
+        Write-Host "$name is not installed" -ForegroundColor Yellow
+    }
+}
+
+# --- Commands ---
+
+function Show-Config {
+    Write-Host ""
+    Write-Host "  Configuration" -ForegroundColor White
+    Write-Host "  Install dir: $ResolvedAppsDir" -ForegroundColor Cyan
+    Write-Host "  Config file: $CONFIG_FILE" -ForegroundColor Gray
+    Write-Host ""
+    Write-Host "  To change install path:" -ForegroundColor Gray
+    Write-Host "    .\install.ps1 config -AppsDir D:\my\apps" -ForegroundColor Gray
+    Write-Host ""
+}
+
+function Set-Config {
+    if ($AppsDir) {
+        $config = @{ apps_dir = $AppsDir }
+        Save-Config $config
+        Write-Host "Install path set to: $AppsDir" -ForegroundColor Green
+
+        if (-not (Test-Path $AppsDir)) {
+            New-Item -ItemType Directory -Path $AppsDir -Force | Out-Null
+            Write-Host "Created directory: $AppsDir" -ForegroundColor Gray
+        }
+    }
+    else {
+        Show-Config
+    }
+}
+
+function Show-List {
+    $apps = Get-FilteredApps
+    $installed = Get-Installed
+
+    $tierColors = @{
+        "native" = "Green"
+        "msys2" = "Yellow"
+        "cross-platform" = "Cyan"
+        "python" = "Magenta"
+        "web" = "Blue"
+    }
+
+    Write-Host ""
+    Write-Host "  Awesome Terminal Apps" -ForegroundColor White
+    Write-Host "  Install dir: $ResolvedAppsDir" -ForegroundColor Gray
+    Write-Host "  $($apps.Count) apps found" -ForegroundColor Gray
+    if ($Tier) { Write-Host "  Filter: tier=$Tier" -ForegroundColor Gray }
+    if ($Category) { Write-Host "  Filter: category=$Category" -ForegroundColor Gray }
+    Write-Host ""
+
+    $grouped = $apps | Group-Object -Property category
+    foreach ($group in $grouped) {
+        Write-Host "  $($group.Name.ToUpper())" -ForegroundColor White
+        foreach ($app in ($group.Group | Sort-Object name)) {
+            $isInstalled = $installed.apps.PSObject.Properties.Name -contains $app.name
+            $mark = if ($isInstalled) { "*" } else { " " }
+            $tierColor = $tierColors[$app.tier]
+            if (-not $tierColor) { $tierColor = "Gray" }
+
+            $tierLabel = $app.tier.ToUpper().PadRight(14)
+            Write-Host "  $mark " -NoNewline
+            Write-Host $app.name.PadRight(22) -NoNewline -ForegroundColor White
+            Write-Host "[$tierLabel]" -NoNewline -ForegroundColor $tierColor
+            Write-Host " $($app.description)" -ForegroundColor Gray
+        }
+        Write-Host ""
+    }
+
+    Write-Host "  * = installed" -ForegroundColor Gray
+    Write-Host ""
+}
+
+function Show-Info($name) {
+    $apps = Parse-AppsToml
+    $app = $apps | Where-Object { $_.name -eq $name } | Select-Object -First 1
+
+    if (-not $app) {
+        Write-Host "App '$name' not found" -ForegroundColor Red
+        return
+    }
+
+    $installed = Get-Installed
+    $isInstalled = $installed.apps.PSObject.Properties.Name -contains $name
+
+    Write-Host ""
+    Write-Host "  $($app.name)" -ForegroundColor White
+    Write-Host "  Category:   $($app.category)" -ForegroundColor Gray
+    Write-Host "  Tier:       $($app.tier)" -ForegroundColor Gray
+    Write-Host "  Language:   $($app.language)" -ForegroundColor Gray
+    Write-Host "  License:    $($app.license)" -ForegroundColor Gray
+    Write-Host "  Description: $($app.description)" -ForegroundColor Gray
+    if ($app.github) { Write-Host "  GitHub:     https://github.com/$($app.github)" -ForegroundColor Gray }
+    if ($app.url) { Write-Host "  URL:        $($app.url)" -ForegroundColor Gray }
+    if ($app.tags) { Write-Host "  Tags:       $($app.tags -join ', ')" -ForegroundColor Gray }
+    Write-Host "  Installed:  $(if ($isInstalled) { 'Yes' } else { 'No' })" -ForegroundColor $(if ($isInstalled) { "Green" } else { "Gray" })
+    Write-Host ""
+}
+
+function Invoke-Install {
+    if ($All) {
+        $apps = Get-FilteredApps
+        $installed = Get-Installed
+        $count = 0
+        foreach ($app in $apps) {
+            if ($installed.apps.PSObject.Properties.Name -notcontains $app.name -or $Force) {
+                if (Install-App $app) { $count++ }
+            }
+        }
+        Write-Host "Installed $count apps" -ForegroundColor Green
+    }
+    elseif ($Name) {
+        $apps = Parse-AppsToml
+        $app = $apps | Where-Object { $_.name -eq $Name } | Select-Object -First 1
+        if (-not $app) {
+            Write-Host "App '$Name' not found" -ForegroundColor Red
+            return
+        }
+        Install-App $app | Out-Null
+    }
+    else {
+        Write-Host "Usage: .\install.ps1 install <app-name>" -ForegroundColor Yellow
+        Write-Host "       .\install.ps1 install --all [--tier native]" -ForegroundColor Yellow
+    }
+}
+
+function Invoke-Update {
+    $installed = Get-Installed
+    foreach ($name in $installed.apps.PSObject.Properties.Name) {
+        $appInfo = $installed.apps.$name
+        if ($appInfo.github) {
+            Write-Host "Checking $name..." -ForegroundColor Cyan
+            $download = Get-GithubDownloadUrl $appInfo.github $name
+            if ($download -and $download.Version -ne $appInfo.version) {
+                Write-Host "  Updating $($appInfo.version) -> $($download.Version)" -ForegroundColor Yellow
+                $dir = Get-AppsDir
+                $appDir = Join-Path $dir $name
+
+                if ($download.Type -eq "zip") {
+                    $zipPath = Join-Path $appDir $download.Name
+                    Invoke-WebRequest -Uri $download.Url -OutFile $zipPath -UseBasicParsing
+                    Expand-Archive -Path $zipPath -DestinationPath $appDir -Force
+                    Remove-Item $zipPath -Force
+                    $exe = Get-ChildItem -Path $appDir -Filter "*.exe" -Recurse | Select-Object -First 1
+                    $appInfo.path = if ($exe) { $exe.FullName } else { $appDir }
+                }
+                else {
+                    $exePath = Join-Path $appDir $download.Name
+                    Invoke-WebRequest -Uri $download.Url -OutFile $exePath -UseBasicParsing
+                    $appInfo.path = $exePath
+                }
+
+                $appInfo.version = $download.Version
+                Save-Installed $installed
+                Write-Host "  Updated!" -ForegroundColor Green
+            }
+            else {
+                Write-Host "  Up to date" -ForegroundColor Gray
+            }
+        }
+    }
+}
+
+# --- Main ---
+
+switch ($Command) {
+    "list"    { Show-List }
+    "install" { Invoke-Install }
+    "remove"  { if ($Name) { Remove-App $Name } else { Write-Host "Usage: .\install.ps1 remove <app-name>" -ForegroundColor Yellow } }
+    "update"  { Invoke-Update }
+    "info"    { if ($Name) { Show-Info $Name } else { Write-Host "Usage: .\install.ps1 info <app-name>" -ForegroundColor Yellow } }
+    "config"  { Set-Config }
+}

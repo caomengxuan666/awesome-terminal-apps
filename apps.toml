@@ -1,0 +1,1228 @@
+schema = "awesome-terminal-apps@1.0"
+upstream = "https://github.com/ligurio/awesome-ttygames"
+description = "Curated terminal/CLI apps for Windows — games, music, tools, creative apps with one-click install"
+
+# ============================================================================
+# ARCADE
+# ============================================================================
+
+[[games]]
+name = "0verkill"
+category = "arcade"
+tier = "msys2"
+github = "hackndev/0verkill"
+license = "GPL-2.0"
+language = "C"
+description = "Bloody 2D action deathmatch-like game"
+tags = ["action", "shooter", "multiplayer"]
+
+[[games]]
+name = "aop"
+category = "arcade"
+tier = "msys2"
+url = "https://raffi.at/view/code/aop"
+license = "unknown"
+language = "C"
+description = "Ambassador of Pain - a challenging arcade game"
+tags = ["arcade", "challenging"]
+
+[[games]]
+name = "ascii-invaders"
+category = "arcade"
+tier = "msys2"
+github = "macdice/ascii-invaders"
+license = "unknown"
+language = "C"
+description = "Clone of Space Invaders game"
+tags = ["space-invaders", "shooter"]
+
+[[games]]
+name = "ascii-patrol"
+category = "arcade"
+tier = "web"
+url = "http://ascii-patrol.com/"
+license = "unknown"
+language = "C"
+description = "Clone of Moon Patrol game"
+tags = ["moon-patrol", "side-scroller"]
+
+[[games]]
+name = "ascii-snake"
+category = "arcade"
+tier = "msys2"
+github = "cyphar/ascii-snake"
+license = "MIT"
+language = "C"
+description = "Clone of Snake game"
+tags = ["snake", "classic"]
+
+[[games]]
+name = "bastet"
+category = "arcade"
+tier = "native"
+url = "http://fph.altervista.org/prog/bastet.html"
+license = "GPL-3.0"
+language = "C++"
+description = "Bastard Tetris - evil Tetris that chooses the worst piece"
+tags = ["tetris", "challenging"]
+
+[[games]]
+name = "bootmine"
+category = "arcade"
+tier = "msys2"
+github = "io12/BootMine"
+license = "MIT"
+language = "Assembly"
+description = "Bootable minesweeper in a 512-byte boot sector"
+tags = ["minesweeper", "boot-sector", "tiny"]
+
+[[games]]
+name = "bootrogue"
+category = "arcade"
+tier = "msys2"
+github = "nanochess/bootRogue"
+license = "MIT"
+language = "Assembly"
+description = "Roguelike that fits in a 510-byte boot sector"
+tags = ["roguelike", "boot-sector", "tiny"]
+
+[[games]]
+name = "bricks"
+category = "arcade"
+tier = "msys2"
+github = "nanochess/bricks"
+license = "MIT"
+language = "Assembly"
+description = "Breakout game in a 510-byte boot sector"
+tags = ["breakout", "boot-sector", "tiny"]
+
+[[games]]
+name = "boulder-dash"
+category = "arcade"
+tier = "msys2"
+license = "unknown"
+language = "C"
+description = "Boulder Dash clone - collect diamonds and escape caves"
+tags = ["boulder-dash", "puzzle"]
+
+[[games]]
+name = "conix"
+category = "arcade"
+tier = "msys2"
+github = "garnold/conix"
+license = "unknown"
+language = "C"
+description = "Clone of Xonix game"
+tags = ["xonix", "classic"]
+
+[[games]]
+name = "cavez-of-phear"
+category = "arcade"
+tier = "msys2"
+license = "unknown"
+language = "C"
+description = "Boulder Dash / digger like game"
+tags = ["boulder-dash", "digger"]
+
+[[games]]
+name = "ctris"
+category = "arcade"
+tier = "msys2"
+github = "dominikhackl/ctris"
+license = "BSD"
+language = "C"
+description = "Clone of Tetris game"
+tags = ["tetris", "classic"]
+
+[[games]]
+name = "fbird"
+category = "arcade"
+tier = "msys2"
+github = "nanochess/fbird"
+license = "MIT"
+language = "Assembly"
+description = "Flappy Bird in a boot sector"
+tags = ["flappy-bird", "boot-sector", "tiny"]
+
+[[games]]
+name = "gnuski"
+category = "arcade"
+tier = "msys2"
+license = "GPL"
+language = "C"
+description = "Clone of SkiFree, the old Windows game"
+tags = ["skifree", "classic"]
+
+[[games]]
+name = "gorched"
+category = "arcade"
+tier = "cross-platform"
+github = "zladovan/gorched"
+license = "MIT"
+language = "Go"
+description = "Clone of Scorched Earth game"
+tags = ["scorched-earth", "artillery"]
+
+[[games]]
+name = "invaders"
+category = "arcade"
+tier = "msys2"
+github = "nanochess/invaders"
+license = "MIT"
+language = "Assembly"
+description = "Space Invaders in 512 bytes (boot sector)"
+tags = ["space-invaders", "boot-sector", "tiny"]
+
+[[games]]
+name = "just-asteroids"
+category = "arcade"
+tier = "cross-platform"
+github = "gabrielvictorcf/just-asteroids"
+license = "MIT"
+language = "Rust"
+description = "Clone of Asteroids game"
+tags = ["asteroids", "space"]
+
+[[games]]
+name = "lights"
+category = "arcade"
+tier = "msys2"
+github = "nanochess/lights"
+license = "MIT"
+language = "Assembly"
+description = "Lights out boot sector game"
+tags = ["puzzle", "boot-sector", "tiny"]
+
+[[games]]
+name = "moon-buggy"
+category = "arcade"
+tier = "msys2"
+url = "https://www.seehuhn.de/pages/moon-buggy"
+license = "GPL-2.0"
+language = "C"
+description = "Drive a car across the moon's surface"
+tags = ["driving", "side-scroller"]
+
+[[games]]
+name = "myman"
+category = "arcade"
+tier = "msys2"
+url = "https://myman.sourceforge.io/"
+license = "GPL-2.0"
+language = "C"
+description = "Pac-Man clone for text terminals"
+tags = ["pac-man", "classic"]
+
+[[games]]
+name = "ninvaders"
+category = "arcade"
+tier = "msys2"
+url = "http://ninvaders.sourceforge.net/"
+license = "GPL-2.0"
+language = "C"
+description = "Clone of Space Invaders game"
+tags = ["space-invaders", "classic"]
+
+[[games]]
+name = "nsnake"
+category = "arcade"
+tier = "msys2"
+url = "https://sourceforge.net/projects/nsnake/"
+license = "GPL-3.0"
+language = "C"
+description = "Classic snake game with textual interface"
+tags = ["snake", "classic"]
+
+[[games]]
+name = "pacman"
+category = "arcade"
+tier = "msys2"
+url = "http://slaout.linux62.org/pacman/index.html"
+license = "GPL"
+language = "Python"
+description = "Clone of Pac-Man game"
+tags = ["pac-man", "classic"]
+
+[[games]]
+name = "pillman"
+category = "arcade"
+tier = "msys2"
+github = "nanochess/pillman"
+license = "MIT"
+language = "Assembly"
+description = "Pac-Man in 512 bytes (boot sector)"
+tags = ["pac-man", "boot-sector", "tiny"]
+
+[[games]]
+name = "piu-piu-SH"
+category = "arcade"
+tier = "cross-platform"
+github = "vaniacer/piu-piu-SH"
+license = "MIT"
+language = "Shell"
+description = "Old school horizontal scroller Shoot Them All game"
+tags = ["shooter", "side-scroller"]
+
+[[games]]
+name = "sshtron"
+category = "arcade"
+tier = "web"
+url = "http://sshtron.zachlatta.com/"
+license = "MIT"
+language = "Go"
+description = "Multiplayer lightcycle game over SSH"
+tags = ["tron", "multiplayer", "ssh"]
+
+[[games]]
+name = "terminal-phase"
+category = "arcade"
+tier = "cross-platform"
+url = "https://gitlab.com/dustyweb/terminal-phase"
+license = "MIT"
+language = "Rust"
+description = "Space shooter game in your terminal"
+tags = ["shooter", "space"]
+
+[[games]]
+name = "tet-ris"
+category = "arcade"
+tier = "cross-platform"
+github = "manorajesh/tet-ris"
+license = "MIT"
+language = "Rust"
+description = "1984-style Tetris with ghost piece, hold, save/load"
+tags = ["tetris", "modern"]
+
+[[games]]
+name = "tinytetris"
+category = "arcade"
+tier = "cross-platform"
+github = "taylorconor/tinytetris"
+license = "MIT"
+language = "C++"
+description = "80x23 terminal tetris"
+tags = ["tetris", "minimal"]
+
+[[games]]
+name = "termtris"
+category = "arcade"
+tier = "cross-platform"
+github = "snvshal/termtris"
+license = "MIT"
+language = "Rust"
+description = "Full-featured Tetris with scoring and levels"
+tags = ["tetris", "feature-rich"]
+
+# ============================================================================
+# PUZZLE
+# ============================================================================
+
+[[games]]
+name = "2048"
+category = "puzzle"
+tier = "native"
+github = "mevdschee/2048.c"
+license = "MIT"
+language = "C"
+description = "Classic 2048 sliding puzzle in terminal, no dependencies"
+tags = ["puzzle", "numbers", "no-deps"]
+
+[[games]]
+name = "2048-cli"
+category = "puzzle"
+tier = "msys2"
+github = "Tiehuis/2048-cli"
+license = "MIT"
+language = "C"
+description = "2048 game for the terminal with ncurses"
+tags = ["puzzle", "numbers"]
+
+[[games]]
+name = "chroma"
+category = "puzzle"
+tier = "web"
+url = "http://www.level7.org.uk/chroma/"
+license = "unknown"
+language = "C"
+description = "Challenging puzzle game"
+tags = ["puzzle", "logic"]
+
+[[games]]
+name = "cmines"
+category = "puzzle"
+tier = "msys2"
+url = "https://www.muppetlabs.com/~breadbox/software/cgames.html"
+license = "BSD"
+language = "C"
+description = "Clone of Minesweeper game"
+tags = ["minesweeper", "classic"]
+
+[[games]]
+name = "csol"
+category = "puzzle"
+tier = "cross-platform"
+github = "nielssp/csol"
+license = "MIT"
+language = "C"
+description = "Collection of solitaire games (Klondike, FreeCell, Spider, Yukon)"
+tags = ["solitaire", "card", "collection"]
+
+[[games]]
+name = "enigma"
+category = "puzzle"
+tier = "msys2"
+url = "https://www.chiark.greenend.org.uk/~sgtatham/enigma/"
+license = "MIT"
+language = "C"
+description = "Puzzle game where items must be collected in the right order"
+tags = ["puzzle", "logic"]
+
+[[games]]
+name = "fifteen-puzzle"
+category = "puzzle"
+tier = "python"
+url = "http://tldp.org/LDP/abs/html/contributed-scripts.html#FIFTEEN"
+license = "GPL"
+language = "Shell"
+description = "Classic 15-puzzle sliding game"
+tags = ["sliding", "classic"]
+
+[[games]]
+name = "floodit"
+category = "puzzle"
+tier = "cross-platform"
+github = "smmspiers/FloodIt"
+license = "MIT"
+language = "C"
+description = "Flood a grid of colours to one colour"
+tags = ["flood", "colors"]
+
+[[games]]
+name = "greed"
+category = "puzzle"
+tier = "msys2"
+url = "http://www.catb.org/~esr/greed/"
+license = "BSD"
+language = "C"
+description = "Puzzle game with numbers - consume as many as you can"
+tags = ["numbers", "consumption"]
+
+[[games]]
+name = "katamascii"
+category = "puzzle"
+tier = "msys2"
+github = "taviso/katamascii"
+license = "MIT"
+language = "C"
+description = "Roll around collecting ASCII-art objects"
+tags = ["puzzle", "ascii-art"]
+
+[[games]]
+name = "minecurses"
+category = "puzzle"
+tier = "cross-platform"
+github = "christosmarg/minecurses"
+license = "MIT"
+language = "Python"
+description = "Minesweeper variant - defuse all mines"
+tags = ["minesweeper", "variant"]
+
+[[games]]
+name = "minesviiper"
+category = "puzzle"
+tier = "msys2"
+url = "https://gir.st/mines.html"
+license = "MIT"
+language = "C"
+description = "Minesweeper with vi keybindings and mouse control"
+tags = ["minesweeper", "vim"]
+
+[[games]]
+name = "minesweep-rs"
+category = "puzzle"
+tier = "cross-platform"
+github = "cpcloud/minesweep-rs"
+license = "MIT"
+language = "Rust"
+description = "Minesweeper written in Rust using tui-rs"
+tags = ["minesweeper", "rust"]
+
+[[games]]
+name = "nudoku"
+category = "puzzle"
+tier = "msys2"
+github = "jubalh/nudoku"
+license = "GPL-3.0"
+language = "C"
+description = "ncurses based sudoku game"
+tags = ["sudoku", "numbers"]
+
+[[games]]
+name = "nuzzle"
+category = "puzzle"
+tier = "cross-platform"
+github = "dead-end/nuzzle"
+license = "MIT"
+language = "Rust"
+description = "Puzzle game collection (N-curses p-UZZLE)"
+tags = ["puzzle", "collection"]
+
+[[games]]
+name = "puzzl"
+category = "puzzle"
+tier = "cross-platform"
+github = "pravj/puzzl"
+license = "MIT"
+language = "Rust"
+description = "Intelligent version of the sliding-puzzle game"
+tags = ["sliding", "logic"]
+
+[[games]]
+name = "sudoku-rs"
+category = "puzzle"
+tier = "cross-platform"
+github = "MitchelPaulin/sudoku-rs"
+license = "MIT"
+language = "Rust"
+description = "Sudoku built with tui-rs"
+tags = ["sudoku", "rust"]
+
+# ============================================================================
+# ROGUELIKE
+# ============================================================================
+
+[[games]]
+name = "adom"
+category = "roguelike"
+tier = "native"
+url = "https://www.adom.de/"
+license = "GPL-2.0"
+language = "C"
+description = "Ancient Domains of Mystery - classic roguelike"
+tags = ["classic", "dungeon", "complex"]
+
+[[games]]
+name = "angband"
+category = "roguelike"
+tier = "msys2"
+url = "https://rephial.org/"
+license = "GPL-2.0"
+language = "C"
+description = "Single-player dungeon exploration game"
+tags = ["classic", "dungeon", "loot"]
+
+[[games]]
+name = "brogue"
+category = "roguelike"
+tier = "cross-platform"
+url = "https://sites.google.com/site/broguegame/"
+license = "GPL-3.0"
+language = "C"
+description = "Beautiful roguelike dungeon crawler"
+tags = ["beautiful", "dungeon", "accessible"]
+
+[[games]]
+name = "brogue-ce"
+category = "roguelike"
+tier = "cross-platform"
+github = "tmewett/BrogueCE"
+license = "GPL-3.0"
+language = "C"
+description = "Community Edition of Brogue roguelike"
+tags = ["beautiful", "dungeon", "community"]
+
+[[games]]
+name = "crawl"
+category = "roguelike"
+tier = "cross-platform"
+url = "https://crawl.develz.org/wordpress/"
+license = "GPL-2.0"
+language = "C++"
+description = "Dungeon Crawl Stone Soup - explore and rescue the Orb of Zot"
+tags = ["classic", "dungeon", "competitive"]
+
+[[games]]
+name = "cataclysm"
+category = "roguelike"
+tier = "native"
+url = "https://web.archive.org/web/20190209031801/http://en.cataclysmdda.com/"
+license = "CC-BY-SA-3.0"
+language = "C++"
+description = "Post-apocalyptic survival roguelike"
+tags = ["survival", "post-apocalyptic", "crafting"]
+
+[[games]]
+name = "diablorl"
+category = "roguelike"
+tier = "native"
+url = "https://diablo.chaosforge.org/"
+license = "GPL-2.0"
+language = "C++"
+description = "Roguelike unmake of Diablo"
+tags = ["diablo", "action", "loot"]
+
+[[games]]
+name = "doomrl"
+category = "roguelike"
+tier = "native"
+url = "https://drl.chaosforge.org/"
+license = "GPL-2.0"
+language = "C++"
+description = "Fast coffee-break Roguelike inspired by Doom"
+tags = ["doom", "action", "fast"]
+
+[[games]]
+name = "frozen-depths"
+category = "roguelike"
+tier = "native"
+url = "https://frozendepths.net/"
+license = "GPL-2.0"
+language = "C++"
+description = "Roguelike with an entertaining atmosphere"
+tags = ["atmospheric", "dungeon"]
+
+[[games]]
+name = "gearhead"
+category = "roguelike"
+tier = "native"
+url = "http://www.gearheadrpg.com/"
+license = "GPL"
+language = "C++"
+description = "First roguelike to explore the world of mechas"
+tags = ["mecha", "sci-fi", "rpg"]
+
+[[games]]
+name = "hack"
+category = "roguelike"
+tier = "msys2"
+url = "https://man.openbsd.org/hack.6"
+license = "BSD"
+language = "C"
+description = "Exploring The Dungeons of Doom - BSD game"
+tags = ["classic", "dungeon", "bsd"]
+
+[[games]]
+name = "larn"
+category = "roguelike"
+tier = "msys2"
+url = "https://man.netbsd.org/larn.6"
+license = "BSD"
+language = "C"
+description = "Exploring the caverns of Larn - BSD game"
+tags = ["classic", "dungeon", "bsd"]
+
+[[games]]
+name = "mangband"
+category = "roguelike"
+tier = "native"
+url = "https://www.mangband.org/"
+license = "GPL"
+language = "C"
+description = "Multiplayer clone of Angband"
+tags = ["multiplayer", "dungeon", "mmorpg"]
+
+[[games]]
+name = "nethack"
+category = "roguelike"
+tier = "native"
+url = "https://www.nethack.org/"
+license = "NetHack"
+language = "C"
+description = "Classic dungeon exploration roguelike since 1987"
+tags = ["classic", "dungeon", "legendary"]
+
+[[games]]
+name = "nlarn"
+category = "roguelike"
+tier = "native"
+url = "http://freshmeat.sourceforge.net/projects/nlarn"
+license = "GPL-2.0"
+language = "C"
+description = "Enhanced rewrite of the historic roguelike Larn"
+tags = ["classic", "dungeon", "enhanced"]
+
+[[games]]
+name = "omega"
+category = "roguelike"
+tier = "native"
+url = "http://www.alcyone.com/max/projects/omega/"
+license = "GPL"
+language = "C"
+description = "Rogue-style game of dungeon exploration"
+tags = ["classic", "dungeon"]
+
+[[games]]
+name = "rogue"
+category = "roguelike"
+tier = "msys2"
+url = "https://man.netbsd.org/rogue.6"
+license = "BSD"
+language = "C"
+description = "Exploring The Dungeons of Doom - the original BSD game"
+tags = ["classic", "dungeon", "bsd", "original"]
+
+[[games]]
+name = "sil"
+category = "roguelike"
+tier = "native"
+url = "http://www.amirrorclear.net/flowers/game/sil/"
+license = "GPL-2.0"
+language = "C"
+description = "Roguelike set in Tolkien's Middle-earth"
+tags = ["tolkien", "middle-earth", "atmospheric"]
+
+# ============================================================================
+# STRATEGY
+# ============================================================================
+
+[[games]]
+name = "chess-tui"
+category = "strategy"
+tier = "cross-platform"
+github = "thomas-mauran/chess-tui"
+license = "MIT"
+language = "Rust"
+description = "Play Chess in your terminal"
+tags = ["chess", "ai"]
+
+[[games]]
+name = "chs"
+category = "strategy"
+tier = "cross-platform"
+github = "nickzuber/chs"
+license = "MIT"
+language = "Rust"
+description = "Chess game against Stockfish engine"
+tags = ["chess", "stockfish"]
+
+[[games]]
+name = "connect4"
+category = "strategy"
+tier = "msys2"
+github = "badescunicu/connect4"
+license = "MIT"
+language = "Python"
+description = "Clone of Connect Four game"
+tags = ["connect-four", "board"]
+
+[[games]]
+name = "curse-of-war"
+category = "strategy"
+tier = "msys2"
+url = "https://a-nikolaev.github.io/curseofwar/"
+license = "GPL-3.0"
+language = "C"
+description = "Fast-paced action strategy game"
+tags = ["rts", "fast-paced", "strategy"]
+
+[[games]]
+name = "gnugo"
+category = "strategy"
+tier = "native"
+url = "https://www.gnu.org/software/chess/"
+license = "GPL-3.0"
+language = "C"
+description = "GNU Go - the game of Go"
+tags = ["go", "ai", "gnu"]
+
+[[games]]
+name = "gnuchess"
+category = "strategy"
+tier = "native"
+url = "https://www.gnu.org/software/chess/"
+license = "GPL-3.0"
+language = "C"
+description = "GNU Chess - chess-playing program"
+tags = ["chess", "ai", "gnu"]
+
+[[games]]
+name = "gomoku"
+category = "strategy"
+tier = "msys2"
+url = "https://man.openbsd.org/gomoku.6"
+license = "BSD"
+language = "C"
+description = "Five in a row on a 19x19 grid - BSD game"
+tags = ["gomoku", "board", "bsd"]
+
+[[games]]
+name = "shogi"
+category = "strategy"
+tier = "native"
+url = "https://www.gnu.org/software/gnushogi/"
+license = "GPL-3.0"
+language = "C"
+description = "GNU Shogi - Japanese chess"
+tags = ["shogi", "japanese", "ai"]
+
+# ============================================================================
+# BOARD
+# ============================================================================
+
+[[games]]
+name = "checkers"
+category = "board"
+tier = "msys2"
+license = "unknown"
+language = "C"
+description = "Two-player checkers board game"
+tags = ["checkers", "classic"]
+
+[[games]]
+name = "dab"
+category = "board"
+tier = "msys2"
+url = "https://man.netbsd.org/dab.6"
+license = "BSD"
+language = "C"
+description = "Dots and Boxes game - BSD game"
+tags = ["dots-and-boxes", "bsd"]
+
+[[games]]
+name = "hinversi"
+category = "board"
+tier = "msys2"
+license = "GPL"
+language = "C"
+description = "Implementation of Reversi (Othello)"
+tags = ["reversi", "othello"]
+
+[[games]]
+name = "mancala"
+category = "board"
+tier = "msys2"
+url = "https://shh.thathost.com/pub-unix/#Mancala"
+license = "BSD"
+language = "C"
+description = "Clone of the board game Mancala"
+tags = ["mancala", "african"]
+
+[[games]]
+name = "othello"
+category = "board"
+tier = "msys2"
+license = "unknown"
+language = "C"
+description = "Two-player board game"
+tags = ["othello", "reversi"]
+
+[[games]]
+name = "ttt-terminal"
+category = "board"
+tier = "cross-platform"
+github = "Learning-Zero/tictactoe-terminal"
+license = "MIT"
+language = "Rust"
+description = "Tic Tac Toe in the terminal"
+tags = ["tic-tac-toe", "classic"]
+
+# ============================================================================
+# CARD
+# ============================================================================
+
+[[games]]
+name = "bj"
+category = "card"
+tier = "msys2"
+license = "BSD"
+language = "C"
+description = "Blackjack card game"
+tags = ["blackjack", "casino"]
+
+[[games]]
+name = "bluemoon"
+category = "card"
+tier = "msys2"
+url = "http://www.catb.org/~esr/bluemoon/"
+license = "BSD"
+language = "C"
+description = "The Blue Moon card solitaire"
+tags = ["solitaire", "card"]
+
+[[games]]
+name = "canfield"
+category = "card"
+tier = "msys2"
+url = "https://man.openbsd.org/canfield.6"
+license = "BSD"
+language = "C"
+description = "The solitaire card game Canfield - BSD game"
+tags = ["solitaire", "bsd"]
+
+[[games]]
+name = "cpat"
+category = "card"
+tier = "native"
+url = "http://cpat.sourceforge.net/"
+license = "GPL"
+language = "C"
+description = "Collection of many solitaire/patience games"
+tags = ["solitaire", "collection"]
+
+[[games]]
+name = "freecell"
+category = "card"
+tier = "msys2"
+url = "https://www.linusakesson.net/software/freecell.php"
+license = "BSD"
+language = "C"
+description = "Clone of FreeCell solitaire"
+tags = ["freecell", "solitaire"]
+
+[[games]]
+name = "freecell-ng"
+category = "card"
+tier = "msys2"
+github = "ostrosablin/freecell"
+license = "BSD"
+language = "C"
+description = "Improved FreeCell with solver support"
+tags = ["freecell", "solitaire", "solver"]
+
+[[games]]
+name = "csol"
+category = "card"
+tier = "cross-platform"
+github = "nielssp/csol"
+license = "MIT"
+language = "C"
+description = "Collection: Klondike, FreeCell, Spider, Yukon"
+tags = ["solitaire", "collection"]
+
+# ============================================================================
+# OTHER
+# ============================================================================
+
+[[games]]
+name = "corewar"
+category = "other"
+tier = "native"
+url = "http://www.corewar.info/"
+license = "BSD"
+language = "C"
+description = "Programming game where battle programs compete for memory"
+tags = ["programming", "game-theory"]
+
+[[games]]
+name = "doom-ascii"
+category = "other"
+tier = "native"
+github = "wojciech-graj/doom-ascii"
+license = "GPL-3.0"
+language = "C"
+description = "Actual DOOM rendered in ASCII art in the terminal"
+tags = ["doom", "fps", "ascii-art"]
+
+[[games]]
+name = "dwarf-fortress"
+category = "other"
+tier = "native"
+url = "https://www.bay12games.com/dwarves/"
+license = "GPL-2.0"
+language = "C++"
+description = "Single-player fantasy fortress management"
+tags = ["management", "fantasy", "legendary"]
+
+[[games]]
+name = "frotz"
+category = "other"
+tier = "cross-platform"
+url = "https://davidgriffith.gitlab.io/frotz/"
+license = "GPL-2.0"
+language = "C"
+description = "Interpreter for Infocom and Z-machine games"
+tags = ["interactive-fiction", "interpreter"]
+
+[[games]]
+name = "nbsdgames"
+category = "other"
+tier = "msys2"
+github = "abakh/nbsdgames"
+license = "BSD"
+language = "C"
+description = "Package of 18 text-based modern games"
+tags = ["collection", "bsd", "modern"]
+
+[[games]]
+name = "open-adventure"
+category = "other"
+tier = "cross-platform"
+url = "https://gitlab.com/esr/open-adventure"
+license = "BSD"
+language = "C"
+description = "Colossal Cave Adventure - the original text adventure"
+tags = ["adventure", "classic", "historical"]
+
+[[games]]
+name = "oregon-trail"
+category = "other"
+tier = "python"
+github = "yudonglin/Oregon-Trail"
+license = "MIT"
+language = "Python"
+description = "Recreation of the classic Oregon Trail game"
+tags = ["adventure", "classic", "educational"]
+
+[[games]]
+name = "pokete"
+category = "other"
+tier = "python"
+github = "lxgr-linux/pokete"
+license = "GPL-3.0"
+language = "Python"
+description = "Terminal-based Pokemon-like game with battles"
+tags = ["pokemon", "rpg", "collection"]
+
+[[games]]
+name = "robotfindskitten"
+category = "other"
+tier = "cross-platform"
+url = "http://robotfindskitten.org/"
+license = "GPL-2.0"
+language = "C"
+description = "Yet another zen simulation"
+tags = ["zen", "simulation", "peaceful"]
+
+[[games]]
+name = "ssh-frogger"
+category = "other"
+tier = "web"
+url = "https://ssh.frogger.hackthe.net/"
+license = "unknown"
+language = "Go"
+description = "Frogger clone playable over SSH"
+tags = ["frogger", "ssh", "web"]
+
+[[games]]
+name = "wordle-cli"
+category = "other"
+tier = "cross-platform"
+github = "ajeetdsouza/clidle"
+license = "MIT"
+language = "Rust"
+description = "Play Wordle in your terminal, also works over SSH"
+tags = ["wordle", "word", "ssh"]
+
+# ============================================================================
+# MUSIC - Terminal pianos, instruments, DJ tools, visualizers
+# ============================================================================
+
+[[games]]
+name = "cava"
+category = "music"
+tier = "native"
+github = "karlstav/cava"
+license = "MIT"
+language = "C"
+description = "The standard bar spectrum audio visualizer for the terminal"
+tags = ["visualizer", "spectrum", "audio", "bars"]
+
+[[games]]
+name = "musikcube"
+category = "music"
+tier = "native"
+github = "clangen/musikcube"
+license = "BSD-3"
+language = "C++"
+description = "Terminal music player + audio engine + streaming server. Milkdrop visualizer."
+tags = ["player", "audio", "server", "visualizer"]
+
+[[games]]
+name = "kew"
+category = "music"
+tier = "native"
+github = "ravachol/kew"
+license = "GPL-2.0"
+language = "C"
+description = "Immersive terminal music player with Sixel album art and spectrum visualizer"
+tags = ["player", "album-art", "sixel", "lyrics"]
+
+[[games]]
+name = "piango"
+category = "music"
+tier = "native"
+github = "SirSobhan0/piango"
+license = "GPL-3.0"
+language = "Go"
+description = "Low-latency polyphonic synth in terminal. 8 instruments, 3 octaves, Bubble Tea TUI."
+tags = ["piano", "synth", "midi", "polyphonic"]
+
+[[games]]
+name = "phosphor-studio"
+category = "music"
+tier = "cross-platform"
+github = "joshjetson/phosphor"
+license = "MIT"
+language = "Rust"
+description = "Terminal-native DAW with 6 synths, 10 drum kits, 300+ patches, piano roll, MIDI"
+tags = ["daw", "synth", "piano-roll", "midi"]
+
+[[games]]
+name = "textstep"
+category = "music"
+tier = "cross-platform"
+github = "illobo/textStep"
+license = "GPL-2.0"
+language = "Rust"
+description = "Terminal step sequencer + drum machine + dual synth. Ableton Link, 10 demo scenes."
+tags = ["sequencer", "drum-machine", "synth", "link"]
+
+[[games]]
+name = "imbolc"
+category = "music"
+tier = "cross-platform"
+github = "mohsenil85/imbolc"
+license = "GPL-3.0"
+language = "Rust"
+description = "Complete terminal DAW. 58 instruments, 39 effects, SuperCollider DSP, LAN collab."
+tags = ["daw", "supercollider", "effects", "collaboration"]
+
+[[games]]
+name = "termus"
+category = "music"
+tier = "native"
+github = "mrbrutti/termus"
+license = "MIT"
+language = "Go"
+description = "Generative music instrument. 9+ algorithms, SoundFont synthesis, WAV/MIDI export."
+tags = ["generative", "soundfont", "export", "ambient"]
+
+[[games]]
+name = "mixr"
+category = "music"
+tier = "native"
+github = "chris-mclennan/mixr"
+license = "MIT"
+language = "Rust"
+description = "Full terminal DJ app. Beatport streaming, 2-deck engine, Claude AI DJ, MIDI support."
+tags = ["dj", "mixing", "streaming", "midi"]
+
+[[games]]
+name = "beat-gen"
+category = "music"
+tier = "cross-platform"
+github = "glebis/beat-gen"
+license = "MIT"
+language = "JavaScript"
+description = "CLI full-track generator. 9 genres, 12 track types, MIDI/PNG/WAV export."
+tags = ["generator", "midi", "wav", "genres"]
+
+[[games]]
+name = "upiano"
+category = "music"
+tier = "python"
+github = "eliasdorneles/upiano"
+license = "MIT"
+language = "Python"
+description = "Terminal piano using Textual TUI + FluidSynth. Play with keyboard."
+tags = ["piano", "fluidsynth", "tui", "keyboard"]
+
+[[games]]
+name = "tpiano"
+category = "music"
+tier = "cross-platform"
+github = "gfargo/tPiano"
+license = "MIT"
+language = "TypeScript"
+description = "Terminal piano built with React/Ink. Multi-octave keyboard input."
+tags = ["piano", "ink", "react", "keyboard"]
+
+[[games]]
+name = "acordes"
+category = "music"
+tier = "python"
+github = "pushpop/Acordes"
+license = "GPL-3.0"
+language = "Python"
+description = "Professional TUI MIDI synth + piano + 16-step drum machine. 128 presets, arpeggiator."
+tags = ["piano", "drum-machine", "midi", "arpeggiator"]
+
+[[games]]
+name = "sq"
+category = "music"
+tier = "native"
+github = "chriserin/sq"
+license = "MIT"
+language = "Go"
+description = "Terminal MIDI sequencer. Euclidean rhythms, vim-style, pattern mode, arrangement."
+tags = ["midi", "sequencer", "euclidean", "vim"]
+
+[[games]]
+name = "tty-clock"
+category = "music"
+tier = "cross-platform"
+github = "xorg62/tty-clock"
+license = "BSD-3"
+language = "C"
+description = "Classic terminal digital clock. Screensaver mode, colors, rebound."
+tags = ["clock", "screensaver", "time"]
+
+[[games]]
+name = "clock-rs"
+category = "music"
+tier = "native"
+github = "Oughie/clock-rs"
+license = "Apache-2.0"
+language = "Rust"
+description = "Modern terminal clock, timer, stopwatch. Config file, CLI overrides."
+tags = ["clock", "timer", "stopwatch"]
+
+[[games]]
+name = "sigye"
+category = "music"
+tier = "native"
+github = "am2rican5/sigye"
+license = "MIT"
+language = "Rust"
+description = "Feature-rich terminal clock. 6 modes, FIGlet fonts, animated backgrounds, Pomodoro."
+tags = ["clock", "pomodoro", "figlet", "world-clock"]
+
+[[games]]
+name = "programmer-calculator"
+category = "creative"
+tier = "cross-platform"
+github = "alt-romes/programmer-calculator"
+license = "GPL-3.0"
+language = "C"
+description = "Terminal calculator for programmers. Binary/hex/decimal, bitwise ops, customizable."
+tags = ["calculator", "binary", "hex", "bitwise"]
+
+[[games]]
+name = "durdraw"
+category = "creative"
+tier = "python"
+github = "cmang/durdraw"
+license = "MIT"
+language = "Python"
+description = "ASCII/Unicode/ANSI art editor. Animation, 256 colors, CP437, themes, mouse support."
+tags = ["ascii", "animation", "ansi", "drawing"]
+
+[[games]]
+name = "ascii-draw"
+category = "creative"
+tier = "python"
+github = "Nokse22/ascii-draw"
+license = "GPL-3.0"
+language = "Python"
+description = "Full ASCII drawing app. Rectangles, lines, freehand, FIGlet text, tables, trees."
+tags = ["ascii", "drawing", "figlet", "tables"]
+
+[[games]]
+name = "figo"
+category = "creative"
+tier = "cross-platform"
+github = "auricvex/figo"
+license = "MIT"
+language = "Rust"
+description = "ASCII art generator CLI + library. Boxes, tables, flowcharts, sequence diagrams."
+tags = ["ascii", "flowchart", "diagrams", "boxes"]
+
+[[games]]
+name = "termdraw"
+category = "creative"
+tier = "cross-platform"
+github = "benvinegar/termdraw"
+license = "MIT"
+language = "TypeScript"
+description = "Terminal drawing editor. Editable documents, export to stdout/stdin."
+tags = ["drawing", "editor", "export"]
