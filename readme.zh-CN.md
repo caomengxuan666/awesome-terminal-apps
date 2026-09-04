@@ -186,31 +186,31 @@ ASCII 艺术编辑器和绘图工具。
 
 ```powershell
 # 列出所有应用
-.\scripts\install.ps1 list
+.\scripts\tap.ps1 list
 
 # 按级别筛选
-.\scripts\install.ps1 list --tier native
+.\scripts\tap.ps1 list --tier native
 
 # 按分类筛选
-.\scripts\install.ps1 list --category roguelike
+.\scripts\tap.ps1 list --category roguelike
 
 # 安装应用
-.\scripts\install.ps1 install nethack
+.\scripts\tap.ps1 install nethack
 
 # 安装所有 native 应用
-.\scripts\install.ps1 install --all --tier native
+.\scripts\tap.ps1 install --all --tier native
 
 # 卸载应用
-.\scripts\install.ps1 remove nethack
+.\scripts\tap.ps1 remove nethack
 
 # 更新已安装应用
-.\scripts\install.ps1 update
+.\scripts\tap.ps1 update
 
 # 设置自定义安装路径（默认自动检测非 C 盘）
-.\scripts\install.ps1 config -AppsDir D:\my\apps
+.\scripts\tap.ps1 config -AppsDir D:\my\apps
 
 # 查看当前配置
-.\scripts\install.ps1 config
+.\scripts\tap.ps1 config
 ```
 
 应用默认安装到第一个非 C 盘（如 `D:\apps\terminal`）。只有 C 盘时回退到 `%USERPROFILE%\apps\terminal`。

@@ -205,31 +205,31 @@ Install apps with one command using the PowerShell installer:
 
 ```powershell
 # List all apps
-.\scripts\install.ps1 list
+.\scripts\tap.ps1 list
 
 # Filter by tier
-.\scripts\install.ps1 list --tier native
+.\scripts\tap.ps1 list --tier native
 
 # Filter by category
-.\scripts\install.ps1 list --category roguelike
+.\scripts\tap.ps1 list --category roguelike
 
 # Install an app
-.\scripts\install.ps1 install nethack
+.\scripts\tap.ps1 install nethack
 
 # Install all native apps
-.\scripts\install.ps1 install --all --tier native
+.\scripts\tap.ps1 install --all --tier native
 
 # Remove an app
-.\scripts\install.ps1 remove nethack
+.\scripts\tap.ps1 remove nethack
 
 # Update installed apps
-.\scripts\install.ps1 update
+.\scripts\tap.ps1 update
 
 # Set custom install path (auto-detects non-C: drive by default)
-.\scripts\install.ps1 config -AppsDir D:\my\apps
+.\scripts\tap.ps1 config -AppsDir D:\my\apps
 
 # Check current config
-.\scripts\install.ps1 config
+.\scripts\tap.ps1 config
 ```
 
 Apps are installed to the first non-C: drive by default (e.g. `D:\apps\terminal`). Falls back to `%USERPROFILE%\apps\terminal` if only C: exists.
